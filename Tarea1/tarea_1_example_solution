@@ -1,0 +1,118 @@
+"""
+Codigo de Tarea 1
+Marco Solano Carlos Diaz
+"""
+
+# Para iniciar se deben instanciar los errores de cada uno de los casos
+# Se utilizan los numeros de error tomados
+# del archivo testing dado por el profesor
+
+CODIGO_EXITO = 0  # Si no se presenta ningún error, devuelve codigo de exito
+
+# Errores del metodo de filtro de vocales
+ERROR_NO_STRING = -100  # La cadena no es un string
+ERROR_NO_LETRAS = -200  # La cadena no presenta letras
+ERROR_STRING_VACIO = -300  # La cadena se encuentra vacia
+ERROR_CADENA_MAYOR_30 = -400  # La cadena tiene más de 30 caracteres
+ERROR_BANDERA_NO_BOOL = -500  # El parámetro bandera no es booleano
+
+# Errores del metodo de busqueda de extremos
+ERROR_LISTA_NO_LISTA = -600  # La entrada no es una lista
+ERROR_LISTA_NO_NUMEROS = -700  # La lista no presentan números
+ERROR_LISTA_VACIA = -800  # La lista se encuentra vacia
+ERROR_LISTA_LARGA = -900  # La lista presenta más de 15 números
+
+
+# Metodo Filtro de Vocales
+
+
+def filtrar_vocales(cadena, bandera):
+    # Parametros de entrada tiene que ser una
+    # cadena string y una bandera booleana
+    # Se valida que la entrada de cadena sea un string
+    if not isinstance(cadena, str):
+        return ERROR_NO_STRING, None  # Si no es string, devuelve el error -100
+# Validar que el string no este vacio
+    if cadena == "":
+        return ERROR_STRING_VACIO, None
+    # Si se encuentra vacio, devuelve error -300
+
+# Validar solo letras
+    if not cadena.isalpha():
+        # Se utiliza el metodo isalpha, indica si hay letras
+        # da true. Si hay numeros, da false
+        return ERROR_NO_LETRAS, None
+    # Si hay un numero u otro caracter no alfabetico,
+    # devuelve codigo de error -200
+
+    # Validar longitud menor de 30 caracteres
+    if len(cadena) > 30:
+        return ERROR_CADENA_MAYOR_30, None
+    # Si presenta mayor de 30 caracteres, devuelve el error -400
+
+    # Validar que la entrada bandera sea un booleano
+    if not isinstance(bandera, bool):
+        return ERROR_BANDERA_NO_BOOL, None
+    # Si no es booleano, devuelve el error -500
+
+    vocales = "aeiouAEIOU"  # Se tiene string de las vocales
+    VOCALES_SALIDA = ""
+    # Se tiene un string vacio,
+    # el cual se va a añadir las vocales extraidas del string
+
+    for letra in cadena:
+        # Se va a tomar cada letra dentro de la cadena y
+        # añadir a las vocales de salida
+
+        if bandera is True:  # El booleano tiene que ser "True"
+            if letra in vocales:
+                # Si la letra esta en el string vocales,
+                # se añade al string VOCALES_SALIDA
+                VOCALES_SALIDA += letra
+
+        else:
+            if letra not in vocales:
+                # Si la letra no esta en el string vocales,
+                # no se añade a la salida
+                VOCALES_SALIDA += letra
+
+    return CODIGO_EXITO, VOCALES_SALIDA
+# Da devuelta el codigo de exito y las vocales obtenidas del string
+
+# Método de busqueda de extremos
+
+
+def encontrar_extremos(lista_numeros):
+    # Presenta como entrada una lista de numeros
+
+    # Se observa que la entrada sea una lista
+    if not isinstance(lista_numeros, list):
+        return ERROR_LISTA_NO_LISTA, None, None
+    # Si no es una lista, devuelve codigo de error -600
+
+    # Valida si hay elementos dentro de la lista
+    if len(lista_numeros) == 0:
+        return ERROR_LISTA_VACIA, None, None
+    # Si esta vacia, devuelve codigo de error -800
+
+    # Se da validación de que hayan
+    # solo números dentro de la lista
+    for lista in lista_numeros:
+
+        # bool es subclase de int, hay que excluirlo
+        if not isinstance(lista, (int, float)) or isinstance(lista, bool):
+            # Verifica que el valor sea un número,
+            # es decir un int o un float, pero que este no sea un booleano
+            return ERROR_LISTA_NO_NUMEROS, None, None
+        # Si no hay números, devuelve codigo de error -700
+
+    # Verifica que la lista sea menor a 15 elementos
+    if len(lista_numeros) > 15:
+        return ERROR_LISTA_LARGA, None, None
+    # Si la lista es mayor a 15 elementos, da devuelta error -900
+
+    VALOR_MIN = min(lista_numeros)  # Se obtiene el limite menor
+    VALOR_MAX = max(lista_numeros)  # Se obtiene el limite mayor
+
+    return CODIGO_EXITO, VALOR_MIN, VALOR_MAX
+# Da devuelta el codigo de exito y los valores minimo y maximo de la lista
